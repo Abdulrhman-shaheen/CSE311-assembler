@@ -1,5 +1,20 @@
 from instructions import mem_instructions, reg_instructions, pseudo_instructions
 def first_pass(lines):
+    """
+    This function takes a list of lines of assembly code and returns a symbol table. It works by 
+    iterating over each line individually and checking if there's a 3 charachter at most label at
+    the beggining that's not one of the instructions in the instruction set. It then return a
+    dictionary with the labels as keys and their respective memory addresses as values. The format 
+    function is used to format the memory addresses as hexadecimal value with "03X" meaning it will
+    add leading zeros if the value is less than three digits) .  
+    
+    Args:
+        lines (list): List of strings with the assembly code.
+    
+    Returns:
+        symbol_table (dict): Dictionary with the labels and their respective memory addresses.
+    """
+    
     lc = format(0, "03X")
     symbol_table = {}
 

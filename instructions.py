@@ -1,5 +1,5 @@
 mem_instructions = {
-    "AND": 0,
+    "AND": 0x0000,
     "ADD": 0x1000,
     "LDA": 0x2000,
     "STA": 0x3000,
