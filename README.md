@@ -1,12 +1,12 @@
 # CSE311 Assembler
 
-This project is an assembler for the basic computer assembly language. The assembler translates the instructions into machine code in two versions, binary and hex that can be found in `IO\out_bin.txt` and `IO\out_hex.txt` respectively.
+This project is an assembler for the basic computer assembly language. The assembler translates the instructions into machine code in two versions, binary and hex that can be found in `IO/out_bin.txt` and `IO/out_hex.txt` respectively.
 
 ## Project Structure
 
 - `first_pass`: This function processes the assembly code to identify labels and store their addresses to be used in the second pass.
 - `second_pass`: This function converts the assembly instructions into machine code.
-- `main`: The main function calls the `first_pass` and the `second_pass` functions, then asserts that the output is the same as the `IO\expected.txt`.
+- `main`: The main function calls the `first_pass` and the `second_pass` functions, then asserts that the output is the same as the `IO/expected.txt`.
 
 ## Functions
 
@@ -39,7 +39,7 @@ The `main` function coordinates the assembly process:
 
 To assemble an assembly file, 
 
-1. Place the assembly code in the file `IO\in.txt`.
+1. Place the assembly code in the file `IO/in.txt`.
 2. Run the following command:
 ```sh
 python main.py
