@@ -24,5 +24,13 @@ reg_instructions = {
     "INP": 0x8000,
 }
 
-pseudo_instructions = ["ORG", "END", "DEC", "HEX"]
+io_instructions = {
+    "INP": 0xF800,
+    "OUT": 0xF400,
+    "SKI": 0xF200,
+    "SKO": 0xF100,
+    "ION": 0xF080,
+    "IOF": 0xF040,
+}
 
+pseudo_instructions = ["ORG", "END", "DEC", "HEX"]

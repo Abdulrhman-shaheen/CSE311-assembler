@@ -2,6 +2,7 @@ from first_pass import first_pass
 from second_pass import second_pass
 
 with open(r"IO/in.txt", "r") as f:
+
     lines = f.readlines()
     lines = [line.strip() for line in lines]
     removed_comments = [line.split("/")[0].rstrip() for line in lines]

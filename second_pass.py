@@ -1,46 +1,57 @@
-from instructions import mem_instructions, reg_instructions, pseudo_instructions
+from instructions import (
+    mem_instructions,
+    reg_instructions,
+    io_instructions,
+    pseudo_instructions,
+)
+
+
 def second_pass(lines, symbol_table):
-    """     
+    """
     This function takes the assembly lines and the symbol table and returns a list of tuples with the memory address
     and the machine code in hex.
-    
+
     It works by iterating over each line and checking which type of instruction it is after splitting the line on the space between
-    the parts of the line. If there's a label in the firs part of the line, it means that the instrucion will be the second part of 
+    the parts of the line. If there's a label in the firs part of the line, it means that the instrucion will be the second part of
     the line not the first. Same with arguments which are the third part of the line if there's a label and the second part if there's
     no label.
 
 
     It handles each type of instruction differently. For pseudo instructions it's straightforward.
-    
+
     For memory instructions:
     It checks if there's a label and if there is it replaces it with the memory address from the
-    symbol table. It then checks if the instruction is indirect and sets the 4th bit in the opcode
-    by ORing it with 0x8000 which have a 1 in  the 15th bit. It then ORs the opcode (which have 
-    bits 0-11 set to zero) with the memory address to get the final hex value of the instruction.
+    symbol table. It then checks if the instruction is indirect if it has the letter "I" as an argument
+    and sets the 4th bit in the opcode by ORing it with 0x8000 which have a 1 in  the 15th bit. It then
+    ORs the opcode (which have  bits 0-11 set to zero) with the memory address to get the final hex 
+    value of the instruction.
 
-    For register instructions:
+    For register instructions or input/output instructions:
     It just gets the opcode from the dictionary in `instruction.py` and formats it as a hexadecimal
     value.
 
-    Format function is also used here to format the hex value with leading zeros if it's less than 
+    Format function is also used here to format the hex value with leading zeros if it's less than
     4 digits.
 
     Args:
         lines (list): List of strings with the assembly code.
         symbol_table (dict): Dictionary with the labels and their respective memory addresses.
-    
+
     Returns:
         machine_code (list): List of tuples with the memory address and the machine code in hex.
-        
+
     """
     lc = format(0, "03X")
     machine_code = []
+    cnt = 0
     for line in lines:
         parts = line.split()
-
+        cnt += 1
         label = parts[0] if "," in parts[0] else None
         instruction = parts[1] if label else parts[0]
         args = parts[2:] if label else parts[1:]
+
+        instruction = instruction.upper()
 
         if instruction == "ORG":
             lc = format(int(args[0], 16), "04X")
@@ -54,8 +65,9 @@ def second_pass(lines, symbol_table):
             and instruction not in reg_instructions
             and instruction not in pseudo_instructions
         ):
-            print(f"Invalid instruction: {instruction}")
-            continue
+            print(f"Invalid instruction: {instruction} at line: {cnt}")
+            print("Exiting...")
+            exit()
 
         if instruction in mem_instructions:
 
@@ -69,7 +81,7 @@ def second_pass(lines, symbol_table):
 
             hex_value = format(opcode | int(args[0], 16), "04X")
 
-        if instruction in reg_instructions:
+        if instruction in reg_instructions or instruction in io_instructions:
             hex_value = format(reg_instructions[instruction], "04X")
 
         if instruction == "DEC":
@@ -82,4 +94,3 @@ def second_pass(lines, symbol_table):
         lc = format(int(lc, 16) + 1, "03X")
 
     return machine_code
-
